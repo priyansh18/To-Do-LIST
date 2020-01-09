@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+
+{% block title %} TO-DO APP {% endblock %}
+
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info alert-dismissable">
+                <button class="close" data-dismiss='alert'>
+                    <small><sup>x</sup>x</small>
+                </button>
+                {{ message }}
+            </div>
+            
+        {% endfor %}
+    {% endif %}
+    {% if item %}
+        <table class="table table-striped table-dark">
+            {% for things in item %}
+                {% if things.completed %}
+                    <tr>
+                        <td><a class="close" href="{% url 'remove' things.id %}">X</a></td>
+                        <td class="lining">{{ things.item }}</td>
+                        <td><button type="button" class="btn btn-danger btn btn-outline-primary"><a href="{% url 'uncross' things.id %}">Uncross</a></button></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td><a class="close" href="{% url 'remove' things.id %}">X</a></td>
+                        <td>{{ things.item }}</td>
+                        <td><button type="button" class="btn btn-danger btn btn-outline-primary"><a href="{% url 'cross_off' things.id %}">cross-off</a></button></td>
+                    </tr>    
+                {% endif %}
+            {% endfor%} 
+        </table>  
+    {% endif %}
+{% endblock %}
